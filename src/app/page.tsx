@@ -56,8 +56,11 @@ export default function Home() {
         <div className="space-y-4 bg-gray-50 p-4 rounded">
           <div>
             <span className="font-bold">Status: </span>
-            <span className={data.status === 'filled' ? 'text-green-500' : 'text-yellow-500'}>
-              {data.status === 'filled' ? 'Completed' : 'Processing'}
+            <span className={
+              data.status === 'filled' ? 'text-green-500' : 
+              data.status === 'refunded' ? 'text-red-500' : 'text-yellow-500'
+            }>
+              {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
             </span>
           </div>
           
@@ -93,6 +96,20 @@ export default function Home() {
                 className="text-blue-500 hover:underline break-all"
               >
                 {data.fillTx}
+              </a>
+            </div>
+          )}
+          
+          {data.depositRefundTxHash && (
+            <div>
+              <span className="font-bold">Refund Transaction: </span>
+              <a 
+                href={getExplorerLink(data.originChainId, data.depositRefundTxHash)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline break-all"
+              >
+                {data.depositRefundTxHash}
               </a>
             </div>
           )}
